@@ -1,10 +1,9 @@
 'use strict';
 //var util = require('util');
-//var path = require('path');
+var path = require('path');
 var yeoman = require('yeoman-generator');
-var yosay = require('yosay');
+//var yosay = require('yosay');
 //var chalk = require('chalk');
-
 
 var NodeAppGenerator = yeoman.generators.Base.extend({
     init: function () {
@@ -20,34 +19,39 @@ var NodeAppGenerator = yeoman.generators.Base.extend({
     askFor: function () {
         var done = this.async();
 
-        // Have Yeoman greet the user.
-        this.log(yosay('Welcome to the marvelous NodeApp generator!'));
-
         var prompts = [{
-            type: 'confirm',
-            name: 'someOption',
-            message: 'Would you like to enable this option?',
-            default: true
+            name: 'appName',
+            message: 'What\'s the name of your node application?'
         }];
 
         this.prompt(prompts, function (props) {
-            this.someOption = props.someOption;
+            if (props.pkgName) {
+                return this.askForGeneratorName();
+            }
+
+            this.appName = props.appName;
 
             done();
         }.bind(this));
     },
 
-    app: function () {
-        this.mkdir('app');
-        this.mkdir('app/templates');
+    enforceFolderName: function () {
+        if (this.appName !== this._.last(this.destinationRoot().split(path.sep))) {
+            this.destinationRoot(this.appName);
+        }
+    },
 
-        this.copy('_package.json', 'package.json');
-        this.copy('_bower.json', 'bower.json');
+    app: function () {
+        this.mkdir('lib');
+        this.mkdir('spec');
+        this.copy('spec/testHelper.js', 'spec/testHelper.js');
+        this.copy('Gruntfile.js', 'Gruntfile.js');
+        this.copy('package.json', 'package.json');
+        this.copy('README.md', 'README.md');
     },
 
     projectfiles: function () {
-        this.copy('editorconfig', '.editorconfig');
-        this.copy('jshintrc', '.jshintrc');
+        this.copy('gitignore', '.gitignore');
     }
 });
 
