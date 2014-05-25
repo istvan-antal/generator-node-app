@@ -82,9 +82,11 @@ module.exports = function (grunt) {
         'jshint', 'jscs', 'test'
     ]);
 
-    grunt.registerTask('test',
+    grunt.registerTask('unitTest',
         ['clean', 'instrument', 'copy', 'mochaTest', 'storeCoverage', 'makeReport', 'coverage']
     );
+
+    grunt.registerTask('test', ['check', 'test']);
 
     grunt.registerTask('default', []);
 };

@@ -48,6 +48,7 @@ var NodeAppGenerator = yeoman.generators.Base.extend({
         this.copy('Gruntfile.js', 'Gruntfile.js');
         this.copy('package.json', 'package.json');
         this.copy('README.md', 'README.md');
+        this.copy('app.js', 'app.js');
     },
 
     projectfiles: function () {

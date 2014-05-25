@@ -25,5 +25,11 @@ node app
 Checking/Testing:
 
 ```bash
-grunt check
+grunt test
+```
+
+Debugging:
+
+```bash
+node debug app
 ```
