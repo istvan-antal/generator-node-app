@@ -79,14 +79,14 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-istanbul-coverage');
 
     grunt.registerTask('check', [
-        'jshint', 'jscs', 'test'
+        'jshint', 'jscs', 'unitTest'
     ]);
 
     grunt.registerTask('unitTest',
         ['clean', 'instrument', 'copy', 'mochaTest', 'storeCoverage', 'makeReport', 'coverage']
     );
 
-    grunt.registerTask('test', ['check', 'test']);
+    grunt.registerTask('test', ['check']);
 
     grunt.registerTask('default', []);
 };
