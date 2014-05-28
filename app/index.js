@@ -17,6 +17,10 @@ var NodeAppGenerator = yeoman.generators.Base.extend({
     },
 
     askFor: function () {
+        if (this.options.appName) {
+            return;
+        }
+
         var done = this.async();
 
         var prompts = [{
@@ -29,19 +33,20 @@ var NodeAppGenerator = yeoman.generators.Base.extend({
                 return this.askForGeneratorName();
             }
 
-            this.appName = props.appName;
+            this.options.appName = props.appName;
 
             done();
         }.bind(this));
     },
 
     enforceFolderName: function () {
-        if (this.appName !== this._.last(this.destinationRoot().split(path.sep))) {
-            this.destinationRoot(this.appName);
+        if (this.options.appName !== this._.last(this.destinationRoot().split(path.sep))) {
+            this.destinationRoot(this.options.appName);
         }
     },
 
     app: function () {
+        this.appName = this.options.appName;
         this.mkdir('lib');
         this.mkdir('spec');
         this.copy('spec/testHelper.js', 'spec/testHelper.js');
